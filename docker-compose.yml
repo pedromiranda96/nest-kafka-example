@@ -19,10 +19,10 @@ services:
     image: 'bitnami/zookeeper:3'
     ports:
       - '2181:2181'
-    volumes:
-      - 'zookeeper_data:/bitnami'
     environment:
       - ALLOW_ANONYMOUS_LOGIN=yes
+    volumes:
+      - 'zookeeper_data:/bitnami'
     networks:
       - app-net
 
@@ -30,8 +30,6 @@ services:
     image: 'bitnami/kafka:3'
     ports:
       - '9092:9092'
-    volumes:
-      - 'kafka_data:/bitnami'
     environment:
       - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper:2181
       - KAFKA_CFG_OFFSETS_TOPIC_REPLICATION_FACTOR=1
@@ -39,6 +37,8 @@ services:
       - ALLOW_PLAINTEXT_LISTENER=yes
     depends_on:
       - zookeeper
+    volumes:
+      - 'kafka_data:/bitnami'
     networks:
       - app-net
 
@@ -53,3 +53,4 @@ volumes:
     driver: local
   postgresql_data:
     driver: local
+    
