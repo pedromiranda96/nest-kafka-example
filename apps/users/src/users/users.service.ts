@@ -29,14 +29,14 @@ export class UsersService {
       throw new Error('E-mail address already registered');
     }
 
-    const user = this.prisma.user.create({
+    const user = await this.prisma.user.create({
       data: {
         name,
         email,
       },
     });
 
-    await this.kafka.emit('users.user-created', {
+    this.kafka.emit('users.user-created', {
       name,
       email,
     });
